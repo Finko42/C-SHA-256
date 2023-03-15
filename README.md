@@ -3,6 +3,8 @@ These are implementations of SHA-256 in C made according to the official standar
 
 These implementations are not meant to be used in serious applications, but serve as reference for implementing SHA-256 in any programming language.
 
+Please note that the algorithm used in these implementations deviate somewhat from the official standard in order to optimize parts of the algorithm. However, the implementations still produce only valid outputs.
+
 ## Usage
 See sha256.h or sha256_malloc.h for more details about the implementations or how to use them.
 
