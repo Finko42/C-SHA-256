@@ -10,6 +10,7 @@
      separately
    - The size of the message schedule is shortened from 64 to 16 32-bit words
      and W is addressed modulo 16 in the main loop
+   - Maj and Ch operators are optimized to use less instructions
 
    Possible:
    - Unroll main computation loops (preferrably with macros)
@@ -80,8 +81,8 @@
 #define ROTR(w, s) ((w >> s) | (w << (32 - s)))
 
 // Operators defined in FIPS 180-4: 4.1.2
-#define Ch(x, y, z) ((x & y) ^ (~x & z))
-#define Maj(x, y, z) ((x & y) ^ (x & z) ^ (y & z))
+#define Ch(x, y, z) (z ^ (x & (y ^ z))) // Same as (x & y) ^ (~x & z)
+#define Maj(x, y, z) (x ^ ((x ^ y) & (x ^ z))) // Same as (x & y) ^ (x & z) ^ (y & z)
 #define S0(x) (ROTR(x, 2) ^ ROTR(x, 13) ^ ROTR(x, 22))
 #define S1(x) (ROTR(x, 6) ^ ROTR(x, 11) ^ ROTR(x, 25))
 #define s0(x) (ROTR(x, 7) ^ ROTR(x, 18) ^ (x >> 3))
